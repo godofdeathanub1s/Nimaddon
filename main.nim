@@ -1,4 +1,4 @@
-import std/net, osproc, os, strformat, posix
+import std/net, osproc, os, strformat
 
 proc windows() =
   # Sleep for 20,000 milliseconds (20 seconds) to potentially evade detection
