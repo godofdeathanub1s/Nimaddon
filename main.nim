@@ -44,9 +44,4 @@ proc main() =
         socket.close()
       except OSError:
         quit("Failed to close the socket")
-
-main()
-    removeFile(execpath)
-    quit("Unsupported operating system")
-
 main()
